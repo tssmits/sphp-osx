@@ -44,9 +44,11 @@ if [ $? -eq 0 ]; then
 
 	echo "Unlinking old binaries..."
 	brew unlink php$currentversion 2> /dev/null > /dev/null
+	brew unlink php${currentversion}-apcu 2> /dev/null > /dev/null
 
 	echo "Linking new binaries..."
 	brew link php$newversion
+	brew link php${newversion}-apcu
 
 	echo "Linking new modphp addon..."
 	sudo ln -sf `brew list php$newversion | grep libphp` /usr/local/lib/libphp${majorNew}.so
