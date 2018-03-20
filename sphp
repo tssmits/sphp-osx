@@ -19,7 +19,7 @@ if [ $# -ne 1 ]; then
 fi
 
 currentversion="`php -r \"error_reporting(0); echo str_replace('.', '', substr(phpversion(), 0, 3));\"`"
-newversion="$1"
+newversion="$1" #`
 
 majorOld=${currentversion:0:1}
 majorNew=${newversion:0:1}
@@ -52,7 +52,7 @@ if [ $? -eq 0 ]; then
   sudo ln -sf `brew list php$newversion | grep libphp` /usr/local/lib/libphp${majorNew}.so
 
   echo "Fixing LoadModule..."
-  apacheConf=`httpd -V | grep -i server_config_file | cut -d '"' -f 2` #`
+  apacheConf=`httpd -V | grep -i server_config_file | cut -d '"' -f 2`
   sudo sed -i -e "/LoadModule php${majorOld}_module/s/^#*/#/" $apacheConf
 
   if grep "LoadModule php${majorNew}_module .*php${newversion}" $apacheConf > /dev/null
